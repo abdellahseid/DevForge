@@ -51,7 +51,7 @@ const App = () => {
         <header className="h-16 border-b border-zinc-800 flex items-center justify-between px-4 md:px-8 bg-zinc-950/80 backdrop-blur sticky top-0 z-20">
           <div className="md:hidden flex items-center gap-3 text-white font-bold cursor-pointer hover:text-neon-blue transition-colors" onClick={toggleSidebar}>
              <Icon name="Menu" size={24} /> 
-             <span className="tracking-tight">DevForge</span>
+             <span className="tracking-tight">SnipBase</span>
           </div>
           <div className="hidden md:flex items-center gap-2 text-zinc-500 text-sm font-mono">
             <span>SYSTEM_STATUS:</span>
