@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SnipBase</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2309090b'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='80' font-weight='bold' fill='white'>S</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              zinc: {
+                950: '#09090b',
+                900: '#18181b',
+                850: '#202023',
+                800: '#27272a',
+                700: '#3f3f46',
+                600: '#52525b',
+                500: '#71717a',
+                400: '#a1a1aa',
+                300: '#d4d4d8',
+                200: '#e4e4e7',
+                100: '#f4f4f5',
+                50: '#fafafa',
+              },
+              neon: {
+                blue: '#3b82f6',
+                purple: '#8b5cf6',
+                green: '#10b981',
+                red: '#ef4444',
+                amber: '#f59e0b',
+              }
+            },
+            fontFamily: {
+              mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        color: #d4d4d8;
+      }
+      /* Custom scrollbar for high-density feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #18181b;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3f3f46;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #52525b;
+      }
+      .terminal-cursor::after {
+        content: '▋';
+        animation: blink 1s step-start infinite;
+        color: #10b981;
+      }
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+      /* Markdown Styles */
+      .markdown-body h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+      .markdown-body h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: #e4e4e7; margin-top: 1.5rem; }
+      .markdown-body h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #d4d4d8; margin-top: 1rem; }
+      .markdown-body p { margin-bottom: 1rem; line-height: 1.6; color: #a1a1aa; }
+      .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+      .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+      .markdown-body code { background: #27272a; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #f59e0b; }
+      .markdown-body pre { background: #18181b; padding: 1rem; border-radius: 6px; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #27272a; }
+      .markdown-body pre code { background: transparent; padding: 0; color: #e4e4e7; }
+      .markdown-body strong { color: #fff; font-weight: 700; }
+      .markdown-body blockquote { border-left: 4px solid #3b82f6; padding-left: 1rem; color: #a1a1aa; font-style: italic; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.0.0/client",
+    "react/jsx-runtime": "https://esm.sh/react@18.0.0/jsx-runtime",
+    "react-markdown": "https://esm.sh/react-markdown@9.0.1?external=react",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1?external=react",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
