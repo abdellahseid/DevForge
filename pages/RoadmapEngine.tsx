@@ -128,9 +128,6 @@ const RoadmapEngine = () => {
                   onClick={() => loadFromHistory(item)}
                   className="group bg-zinc-900/50 border border-zinc-800 p-6 cursor-pointer hover:border-neon-purple hover:bg-zinc-900 transition-all duration-300 relative overflow-hidden flex flex-col h-full"
                 >
-                  <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Icon name="ArrowRight" className="text-neon-purple" size={16} />
-                  </div>
                   <div className="flex justify-between items-start mb-3">
                      <div className="text-xs font-mono text-zinc-500">LOG_ID_{String(i + 1).padStart(3, '0')}</div>
                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
