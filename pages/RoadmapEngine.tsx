@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import * as LucideIcons from 'lucide-react';
 import { generateRoadmap } from '../services/geminiService';
@@ -48,10 +47,10 @@ const RoadmapEngine = () => {
         const parsed = JSON.parse(saved);
         // Migration check: ensure items are objects, not strings
         if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'string') {
-           localStorage.removeItem('roadmap_history'); // Clear old format
-           setHistory([]);
+          localStorage.removeItem('roadmap_history'); // Clear old format
+          setHistory([]);
         } else {
-           setHistory(parsed);
+          setHistory(parsed);
         }
       } catch (e) {
         console.error("Failed to parse history", e);
@@ -61,9 +60,9 @@ const RoadmapEngine = () => {
 
   const saveToHistory = (newIdea: string, newResult: RoadmapResponse) => {
     const newItem: HistoryItem = { 
-        idea: newIdea, 
-        result: newResult, 
-        timestamp: Date.now() 
+      idea: newIdea, 
+      result: newResult, 
+      timestamp: Date.now() 
     };
     
     // Filter duplicates by idea to keep list fresh
@@ -97,6 +96,24 @@ const RoadmapEngine = () => {
     setShowHistory(false);
   };
 
+  const handleClearContext = () => {
+    setResult(null);
+    setIdea('');
+    setError(null);
+  };
+
+  const handleShowHistory = () => {
+    setShowHistory(true);
+  };
+
+  const handleBackToGenerator = () => {
+    setShowHistory(false);
+    // Always reset to clean input form
+    setResult(null);
+    setIdea('');
+    setError(null);
+  };
+
   // --- HISTORY VIEW ---
   if (showHistory) {
     return (
@@ -107,7 +124,7 @@ const RoadmapEngine = () => {
             GENERATION_ARCHIVES
           </h2>
           <button 
-            onClick={() => setShowHistory(false)}
+            onClick={handleBackToGenerator}
             className="flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white hover:border-zinc-500 transition-colors font-mono text-xs uppercase"
           >
             <Icon name="ArrowLeft" size={14} /> Back to Generator
@@ -129,14 +146,14 @@ const RoadmapEngine = () => {
                   className="group bg-zinc-900/50 border border-zinc-800 p-6 cursor-pointer hover:border-neon-purple hover:bg-zinc-900 transition-all duration-300 relative overflow-hidden flex flex-col h-full"
                 >
                   <div className="flex justify-between items-start mb-3">
-                     <div className="text-xs font-mono text-zinc-500">LOG_ID_{String(i + 1).padStart(3, '0')}</div>
-                     <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                        item.result.verdict === 'APPROVED' ? 'border-green-900 bg-green-950/30 text-green-400' :
-                        item.result.verdict === 'REJECTED' ? 'border-red-900 bg-red-950/30 text-red-400' :
-                        'border-amber-900 bg-amber-950/30 text-amber-400'
-                     }`}>
-                        {item.result.verdict}
-                     </span>
+                    <div className="text-xs font-mono text-zinc-500">LOG_ID_{String(i + 1).padStart(3, '0')}</div>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                      item.result.verdict === 'APPROVED' ? 'border-green-900 bg-green-950/30 text-green-400' :
+                      item.result.verdict === 'REJECTED' ? 'border-red-900 bg-red-950/30 text-red-400' :
+                      'border-amber-900 bg-amber-950/30 text-amber-400'
+                    }`}>
+                      {item.result.verdict}
+                    </span>
                   </div>
                   
                   <p className="text-zinc-200 text-sm font-medium line-clamp-3 leading-relaxed group-hover:text-white flex-grow mb-4">
@@ -144,8 +161,8 @@ const RoadmapEngine = () => {
                   </p>
                   
                   <div className="pt-4 border-t border-zinc-800/50 flex justify-between items-center mt-auto">
-                     <span className="text-[10px] font-mono text-zinc-600">{new Date(item.timestamp).toLocaleDateString()}</span>
-                     <span className="text-[10px] font-mono text-neon-blue uppercase group-hover:underline">Restore</span>
+                    <span className="text-[10px] font-mono text-zinc-600">{new Date(item.timestamp).toLocaleDateString()}</span>
+                    <span className="text-[10px] font-mono text-neon-blue uppercase group-hover:underline">Restore</span>
                   </div>
                 </div>
               ))}
@@ -165,16 +182,16 @@ const RoadmapEngine = () => {
           ROADMAP_GENERATOR_V3.1
         </h2>
         <div className="flex items-center gap-4">
-            {result && (
+          {result && (
             <button 
-              onClick={() => setResult(null)} 
+              onClick={handleClearContext} 
               className="text-xs text-zinc-500 hover:text-white underline font-mono"
             >
               CLEAR CONTEXT
             </button>
           )}
           <button 
-            onClick={() => setShowHistory(true)}
+            onClick={handleShowHistory}
             className="flex items-center gap-2 px-3 py-1.5 text-zinc-500 hover:text-white hover:bg-zinc-900 rounded transition-colors text-xs font-mono uppercase"
             title="View History"
           >
@@ -183,44 +200,44 @@ const RoadmapEngine = () => {
         </div>
       </div>
 
-      {/* Input Section - Top */}
+      {/* Input Section - Show when no result */}
       {!result && (
         <div className="w-full">
-            <div className="bg-zinc-950 border border-zinc-800 p-6 space-y-4 shadow-lg shadow-purple-900/10">
-              <div className="flex items-center gap-2 text-zinc-500 font-mono text-sm mb-2">
-                <span className="text-neon-green">architect@system</span>
-                <span>~/roadmap-requests $</span>
-              </div>
-              
-              <form onSubmit={handleGenerate} className="space-y-4">
-                <textarea 
-                  value={idea}
-                  onChange={(e) => setIdea(e.target.value)}
-                  placeholder="Describe your software concept clearly. Vague inputs will be rejected."
-                  className="w-full bg-transparent text-zinc-100 placeholder-zinc-600 focus:outline-none resize-none font-mono text-lg h-32 terminal-cursor border-b border-zinc-900 focus:border-neon-purple/50 transition-colors"
-                  autoFocus
-                />
-                <div className="flex justify-between items-center pt-2">
-                  <span className="text-xs text-zinc-600 font-mono">MODEL: GEMINI-3-PRO-PREVIEW</span>
-                  <button 
-                    type="submit" 
-                    disabled={loading || !idea}
-                    className={`px-8 py-3 font-bold font-mono text-sm transition-all flex items-center gap-2
-                      ${loading ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed' : 'bg-neon-blue text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)]'}
-                    `}
-                  >
-                    {loading ? 'COMPILING...' : 'GENERATE ROADMAP'} <Icon name="ChevronRight" size={14} />
-                  </button>
-                </div>
-              </form>
+          <div className="bg-zinc-950 border border-zinc-800 p-6 space-y-4 shadow-lg shadow-purple-900/10">
+            <div className="flex items-center gap-2 text-zinc-500 font-mono text-sm mb-2">
+              <span className="text-neon-green">architect@system</span>
+              <span>~/roadmap-requests $</span>
             </div>
+            
+            <form onSubmit={handleGenerate} className="space-y-4">
+              <textarea 
+                value={idea}
+                onChange={(e) => setIdea(e.target.value)}
+                placeholder="Describe your software concept clearly. Vague inputs will be rejected."
+                className="w-full bg-transparent text-zinc-100 placeholder-zinc-600 focus:outline-none resize-none font-mono text-lg h-32 terminal-cursor border-b border-zinc-900 focus:border-neon-purple/50 transition-colors"
+                autoFocus
+              />
+              <div className="flex justify-between items-center pt-2">
+                <span className="text-xs text-zinc-600 font-mono">MODEL: GEMINI-3-PRO-PREVIEW</span>
+                <button 
+                  type="submit" 
+                  disabled={loading || !idea}
+                  className={`px-8 py-3 font-bold font-mono text-sm transition-all flex items-center gap-2
+                    ${loading ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed' : 'bg-neon-blue text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)]'}
+                  `}
+                >
+                  {loading ? 'COMPILING...' : 'GENERATE ROADMAP'} <Icon name="ChevronRight" size={14} />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
       {error && (
-          <div className="p-4 border border-red-900/50 bg-red-950/20 text-red-400 font-mono text-sm flex items-center gap-3">
-            <Icon name="AlertTriangle" /> {error}
-          </div>
+        <div className="p-4 border border-red-900/50 bg-red-950/20 text-red-400 font-mono text-sm flex items-center gap-3">
+          <Icon name="AlertTriangle" /> {error}
+        </div>
       )}
 
       {result && (
@@ -259,8 +276,8 @@ const RoadmapEngine = () => {
             </div>
           </div>
 
-            {/* Implementation Plan */}
-            <div>
+          {/* Implementation Plan */}
+          <div>
             <h3 className="text-white font-bold font-mono mb-4 flex items-center gap-2">
               <Icon name="ListOrdered" className="text-neon-purple" />
               EXECUTION PHASES
@@ -286,31 +303,31 @@ const RoadmapEngine = () => {
                 </div>
               ))}
             </div>
-            </div>
+          </div>
 
-            {/* APIs & Security */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-zinc-900/30 border border-zinc-800 p-5">
-                <h4 className="text-zinc-300 font-bold font-mono text-sm mb-3 uppercase">Required APIs</h4>
-                <ul className="space-y-2">
-                  {result.apiRecommendations.map((api, i) => (
-                    <li key={i} className="text-neon-blue text-sm font-mono">{api}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="bg-zinc-900/30 border border-red-900/30 p-5">
-                <h4 className="text-red-400 font-bold font-mono text-sm mb-3 uppercase flex items-center gap-2">
-                  <Icon name="Shield" size={14} /> Security Protocols
-                </h4>
-                <ul className="space-y-2">
-                  {result.securityConsiderations.map((sec, i) => (
-                    <li key={i} className="text-zinc-400 text-sm flex items-start gap-2">
-                        <span className="text-red-500/50">!</span> {sec}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* APIs & Security */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-zinc-900/30 border border-zinc-800 p-5">
+              <h4 className="text-zinc-300 font-bold font-mono text-sm mb-3 uppercase">Required APIs</h4>
+              <ul className="space-y-2">
+                {result.apiRecommendations.map((api, i) => (
+                  <li key={i} className="text-neon-blue text-sm font-mono">{api}</li>
+                ))}
+              </ul>
             </div>
+            <div className="bg-zinc-900/30 border border-red-900/30 p-5">
+              <h4 className="text-red-400 font-bold font-mono text-sm mb-3 uppercase flex items-center gap-2">
+                <Icon name="Shield" size={14} /> Security Protocols
+              </h4>
+              <ul className="space-y-2">
+                {result.securityConsiderations.map((sec, i) => (
+                  <li key={i} className="text-zinc-400 text-sm flex items-start gap-2">
+                    <span className="text-red-500/50">!</span> {sec}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </div>
