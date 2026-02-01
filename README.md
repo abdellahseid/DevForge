@@ -23,7 +23,7 @@
 
 1. **Clone & Install:**
 ```bash
-git clone https://github.com/yourusername/snipbase.git
+git clone https://github.com/abdellahseid/DevForge.git
 cd snipbase && npm install
 
 ```
