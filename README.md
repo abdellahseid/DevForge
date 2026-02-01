@@ -1,29 +1,37 @@
-SnipBase
+# SnipBase 
 
-SnipBase is a fast, all-in-one developer hub that brings together essential tools, reusable snippets, documentation, and references in one place—without the usual clutter.
+**SnipBase** is a high-speed, all-in-one developer hub. It centralizes your daily tools, snippets, and docs into a single, clutter-free workspace.
 
-Built for developers who want answers and productivity now, not after digging through five tabs.
+---
 
-Features
+### Core Features
 
-Centralized developer snippets and references
+* **AI Assistance:** Real-time technical help via **Gemini API**.
+* **Snippet Vault:** Quick-access storage for your reusable code.
+* **Dev Tools:** Built-in utilities to eliminate tab-switching.
+* **Minimalist UI:** Focus-driven design using **Tailwind CSS**.
 
-Clean, distraction-free UI
+### Tech Stack
 
-Fast search and access to daily dev tools
+* **React** + **TypeScript**
+* **Tailwind CSS**
+* **Google Gemini API**
 
-AI-powered assistance via Gemini API
+---
 
-Tech Stack
+### Quick Start
 
-React
+1. **Clone & Install:**
+```bash
+git clone https://github.com/yourusername/snipbase.git
+cd snipbase && npm install
 
-TypeScript
+```
 
-Tailwind CSS
 
-Gemini API
+2. **Configure:** Add `VITE_GEMINI_API_KEY=your_key` to a `.env` file.
+3. **Launch:**
+```bash
+npm run dev
 
-Goal
-
-SnipBase exists to reduce context switching and wasted time. If a tool doesn’t help you ship faster, it doesn’t belong here.
+```
