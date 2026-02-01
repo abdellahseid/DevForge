@@ -1,20 +1,29 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+SnipBase
 
-# Run and deploy your AI Studio app
+SnipBase is a fast, all-in-one developer hub that brings together essential tools, reusable snippets, documentation, and references in one place—without the usual clutter.
 
-This contains everything you need to run your app locally.
+Built for developers who want answers and productivity now, not after digging through five tabs.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1GQMgkURP116jr-AD817TMdhqIOauCQOg
+Features
 
-## Run Locally
+Centralized developer snippets and references
 
-**Prerequisites:**  Node.js
+Clean, distraction-free UI
 
+Fast search and access to daily dev tools
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+AI-powered assistance via Gemini API
+
+Tech Stack
+
+React
+
+TypeScript
+
+Tailwind CSS
+
+Gemini API
+
+Goal
+
+SnipBase exists to reduce context switching and wasted time. If a tool doesn’t help you ship faster, it doesn’t belong here.
