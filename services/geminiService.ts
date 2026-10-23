@@ -2,7 +2,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { RoadmapResponse, AuditResponse, SalaryResponse, ErrorAnalysisResponse } from "../types";
 
-const apiKey = 'AIzaSyDrY_RRJHQi25wU6sHM01rdvXFV56w_Y1M';
+const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
 
 const getClient = () => {
   if (!apiKey) {
